@@ -16,7 +16,7 @@
                     </b>
                 </h4>
 
-                <form method="POST">
+                <form method="POST" novalidate>
                     {% csrf_token %}
                     
                     {{ form.username|as_crispy_field }}
