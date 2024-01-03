@@ -1,6 +1,8 @@
     {% extends 'base.html' %}
+    {% load bootstrap4 %}
 
     {% block head %}
+
     <script></script>
     <style>
         #pills-tab a {
@@ -81,10 +83,10 @@
 
             </div>
 
-           {% comment %} step forms {% endcomment %}
+           
             <b> CREATE A JOB</b>
             <div class="tab-content" id="pills-tabContent">
-               {% comment %} step1 {% endcomment %}
+        {% if step == 1 %}
             <div class="tab-pane fade {% if step == 1 %}show active{% endif %}" id="pills-home" role="tabpanel" aria-labelledby="pills-info-tab">
                 <h1>Item Info<h2>
 
@@ -103,7 +105,7 @@
                 </form>
         </div>
 
-              {% comment %} step2 {% endcomment %}
+        {% elif step == 2 %}    
         <div class ="tab-pane fade {% if step == 2 %}show active{% endif %}"id="pills-pickup" role="tabpanel" aria-labelledby="pills-pickup">
             <h1>Pickup</h1>
 
@@ -144,20 +146,20 @@
             </form>
 
         </div>
-                             {% comment %} step3 {% endcomment %}
+        {% elif step == 3 %}
 
         <div class ="tab-pane fade {% if step == 3 %}show active{% endif %}"id="pills-pickup" role="tabpanel" aria-labelledby="pills-delivery">
             <h1>Delivery</h1>
 
         </div>
 
-                    {% comment %} step4 {% endcomment %}
+        {% elif step == 4 %}
 
         <div class ="tab-pane fade {% if step == 4 %}show active{% endif %}"id="pills-pickup" role="tabpanel" aria-labelledby="pills-payment">
             <h1>Payment</h1>
 
         </div>
-        </div>
+        {% endif %}
 
     </div>
     <script>
@@ -176,20 +178,20 @@
             const infowindow = new google.mapsInfoWindow();
             const infowindowContent = document.getElementById("infowindow-content");
             infowindow.setContent(infowindowContent);
-            const marker = new google.maps.Marker{{
+            const marker = new google.maps.Marker({
                 map,
                 anchorPoint:new google.maps.Point(0, -29),
 
-            }};
-            autocomplete.addListner("place_changed",() {
+            });
+            autocomplete.addListner("place_changed",() => {
                 inforwindow.close();
                 marker.setvisible(false);
                 const place = autocomplete.getPlace();
 
                 if (!place.geometry) {
 
-                    window.alert("No details available for input "" + place.name + "'"):
-                    return:
+                    window.alert("No details available for input " + place.name + "'");
+                    return;
                 }
 
                 if (place.geometry.viewport) {
@@ -205,14 +207,14 @@
                 if (place.address_components){
                     address = [
                     (place.address_components)[0] &&
-                    place.address_components[0].short_name) ||
+                    (place.address_components[0].short_name) ||
                     "",
                     (place.address_components [1] &&
                     place.address_components[1].short_name 
                     )
                     ]
                 }
-            }
+            });
         }
     </script>
-    {% endblock %}
+{% endblock %}
